@@ -5,6 +5,8 @@ const ProductController = require('../controller/ProductController');
 
 router.get('/product', ProductController.index);
 
+router.get('/product/get/:search', ProductController.findLike);
+
 router.post('/product', upload.single('image'), ProductController.store);
 
 router.get('/product/:id', ProductController.show);
