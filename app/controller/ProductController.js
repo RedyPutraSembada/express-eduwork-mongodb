@@ -39,7 +39,7 @@ const update = (req, res) => {
         // console.log(result.image_url);
         const oldUrlImage = result.image_url != null ? result.image_url.split('public/') : null;
         const oldImage = oldUrlImage != null ? oldUrlImage[1] : null;
-        const { user_id, name, price, stok, status } = req.body;
+        const { name, price, stock, status } = req.body;
         let image_url;
         // newimage lebih dulu
         if (oldImage != null) {
@@ -49,20 +49,20 @@ const update = (req, res) => {
                     fs.renameSync(image.path, target);
                     image_url = `http://localhost:3000/public/${image.originalname}`;
                     console.log(image_url);
-                    Product.findByIdAndUpdate(req.params.id, { user_id, name, price, stok, status, image_url }).then(result => res.send(Product.findById(result._id))).catch(error => res.send(error));
+                    Product.findByIdAndUpdate(req.params.id, { name, price, stock, status, image_url }).then(result => res.send(Product.findById(result._id))).catch(error => res.send(error));
                 }
             } else {
                 image_url = `http://localhost:3000/public/${oldImage}`;
-                Product.findByIdAndUpdate(req.params.id, { user_id, name, price, stok, status, image_url }).then(result => res.send(Product.findById(result._id))).catch(error => res.send(error));
+                Product.findByIdAndUpdate(req.params.id, { name, price, stock, status, image_url }).then(result => res.send(Product.findById(result._id))).catch(error => res.send(error));
             }
         } else {
             if (newImage != null) {
                 fs.unlink(`uploads/${oldImage}`, () => { });
                 fs.renameSync(image.path, target);
                 image_url = `http://localhost:3000/public/${image.originalname}`;
-                Product.findByIdAndUpdate(req.params.id, { user_id, name, price, stok, status, image_url }).then(result => res.send(Product.findById(result._id))).catch(error => res.send(error));
+                Product.findByIdAndUpdate(req.params.id, { name, price, stock, status, image_url }).then(result => res.send(Product.findById(result._id))).catch(error => res.send(error));
             } else {
-                Product.findByIdAndUpdate(req.params.id, { user_id, name, price, stok, status, image_url }).then(result => res.send(Product.findById(result._id))).catch(error => res.send(error));
+                Product.findByIdAndUpdate(req.params.id, { name, price, stock, status, image_url }).then(result => res.send(Product.findById(result._id))).catch(error => res.send(error));
             }
         }
     }).catch(error => res.send(error));
